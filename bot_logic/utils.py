@@ -61,7 +61,7 @@ def check_user_status(self, func):
 
 
 def load_data_from_csv():
-    with open('data_broker.csv', 'r', encoding='utf-8') as f:
+    with open('data_agent.csv', 'r', encoding='utf-8') as f:
         result = []
         category = None
         rows = f.readlines()
@@ -116,7 +116,7 @@ def load_data_from_csv():
 
 
 def load_data_to_db(result: List[Dict]):
-    Question.objects.all().delete()
+    # Question.objects.all().delete()
     for row in result:
         is_multi = False
         count_right_questions = 0
@@ -132,7 +132,7 @@ def load_data_to_db(result: List[Dict]):
             text=row['question'],
             paragraph=row['paragraph'],
             multi_answer=is_multi,
-            test_id=2
+            test_id=1
         )
         for dict_answer in row['answers']:
             Answer.objects.create(

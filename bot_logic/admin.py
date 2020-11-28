@@ -5,15 +5,16 @@ from .models import *
 
 
 @admin.register(Question)
-class CountryAdmin(admin.ModelAdmin):
+class QuestionAdmin(admin.ModelAdmin):
     list_display = ('pk', 'category', 'test', 'multi_answer')
     list_filter = ('test', 'category')
 
 
 @admin.register(Answer)
-class CountryAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'is_right', 'question')
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'question', 'is_right')
     list_filter = ('question__test',)
+    search_fields = ('pk', 'question__contains')
 
 
 admin.site.register(Student)
