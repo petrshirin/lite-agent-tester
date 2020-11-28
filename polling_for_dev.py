@@ -8,9 +8,10 @@ from bot_logic.utils import load_data_from_csv, load_data_to_db
 
 if __name__ == '__main__':
     print('start')
-    while True:
-        try:
-            bot.polling(none_stop=True)
-        except ConnectionError as e:
-            print(e)
-            continue
+    # while True:
+    #    try:
+    #        bot.polling(none_stop=True)
+    #    except ConnectionError as e:
+    #        print(e)
+    #        continue
+    load_data_to_db(load_data_from_csv())
