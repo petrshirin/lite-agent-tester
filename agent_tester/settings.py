@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&u0au=!_3_khrq)v&_=&mplc8r+s3#dp*te@gx19cq_@$6ndko'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.environ['DEBUG']))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['']
 
 # Application definition
 
@@ -116,4 +116,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # TELEGRAM
-TELEGRAM_TOKEN = "904287379:AAFfP3aLUBJZ_xvUrP7jsed3CjSzsaAmIig"
+TELEGRAM_TOKEN = os.environ['TELEGRAM_TOKEN']
