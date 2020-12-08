@@ -77,10 +77,11 @@ class Keyboards:
 
     def generate_keyboard_for_theory_question(self, class_name: str, user: Student, question: Question, page: int, test_num: int):
         keyboard = types.InlineKeyboardMarkup(row_width=3)
+        i = 1
         for answer in question.answer_set.all():
             smile = "✅" if user.studentcondition.current_selected_answers.filter(pk=answer.pk).all() else ""
-            keyboard.add(self.answer_option.to_telegram(name=[f"{smile}{answer.text}"], data=['theory', test_num, page, answer.pk]))
-
+            keyboard.add(self.answer_option.to_telegram(name=[f"{smile}{i}"], data=['theory', test_num, page, answer.pk]))
+            i += 1
         if class_name == 'agent':
             back = self.agent_start.to_telegram(data=[class_name, page - 1])
         elif class_name == 'broker':
