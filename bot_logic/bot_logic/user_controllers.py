@@ -153,7 +153,7 @@ class UserLogic:
             self.bot.send_message(self.user.user_id, self.language.test_not_found)
             return check_user_status(self, self.main_menu)()
         question = test.question_set.all()[page]
-        text = self.language.question_wrapper.format(page + 1, question.text)
+        text = self.language.question_wrapper.format(page + 1, question.text, generate_answers_in_message(question.answer_set.all()))
         markup = self.keyboards.generate_keyboard_for_theory_question(
             class_name,
             self.user,
