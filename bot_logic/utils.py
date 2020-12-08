@@ -140,3 +140,13 @@ def load_data_to_db(result: List[Dict]):
                 is_right=dict_answer['is_right'],
                 question=question
             )
+
+
+def generate_answers_in_message(answers: List[Answer]):
+    text = ""
+    i = 1
+    for answer in answers:
+        text += f"{i} - {answer.text}\n"
+        i += 1
+    return text
+

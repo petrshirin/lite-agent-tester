@@ -51,9 +51,11 @@ class Keyboards:
 
     def generate_keyboard_for_test(self, user: Student, question: Question, question_num: int, test_num: int) -> types.InlineKeyboardMarkup:
         keyboard = types.InlineKeyboardMarkup(row_width=3)
+        i = 1
         for answer in question.answer_set.all():
             smile = "✅" if user.studentcondition.current_selected_answers.filter(pk=answer.pk).all() else ""
-            keyboard.add(self.answer_option.to_telegram(name=[f"{smile}{answer.text}"], data=['test', test_num, question_num, answer.pk]))
+            keyboard.add(self.answer_option.to_telegram(name=[f"{smile}{i}"], data=['test', test_num, question_num, answer.pk]))
+            i += 1
         keyboard.add(self.complete_test.to_telegram(),
                      self.clear_selected_answer.to_telegram(data=['test', test_num, question_num]),
                      self.next_question.to_telegram(data=[test_num, question_num + 1]))

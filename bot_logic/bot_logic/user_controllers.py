@@ -6,7 +6,7 @@ from telebot.apihelper import ApiException
 from typing import Union
 from bot_logic.utils import \
     calculated_dict_to_array, calculate_question, \
-    check_user_pay_status, check_user_status
+    check_user_pay_status, check_user_status, generate_answers_in_message
 
 
 class UserLogic:
@@ -209,7 +209,7 @@ class UserLogic:
             return self.complete_test()
         else:
             question = questions[question_num]
-        text = self.language.question_wrapper.format(question_num, question.text)
+        text = self.language.question_wrapper.format(question_num, question.text, generate_answers_in_message(question.answer_set.all()))
         markup = self.keyboards.generate_keyboard_for_test(self.user, question, question_num, 2)
 
         self.send_common_message(text, markup)
@@ -227,7 +227,7 @@ class UserLogic:
         else:
             question = questions[question_num]
         markup = self.keyboards.generate_keyboard_for_test(self.user, question, question_num, 1)
-        text = self.language.question_wrapper.format(question_num + 1, question.text)
+        text = self.language.question_wrapper.format(question_num + 1, question.text, generate_answers_in_message(question.answer_set.all()))
 
         self.send_common_message(text, markup)
 
