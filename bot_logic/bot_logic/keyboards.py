@@ -76,7 +76,7 @@ class Keyboards:
         return keyboard
 
     def generate_keyboard_for_theory_question(self, class_name: str, user: Student, question: Question, page: int, test_num: int):
-        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        keyboard = types.InlineKeyboardMarkup(row_width=1)
         i = 1
         for answer in question.answer_set.all():
             smile = "✅" if user.studentcondition.current_selected_answers.filter(pk=answer.pk).all() else ""
