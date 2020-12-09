@@ -16,8 +16,8 @@ class Test(models.Model):
 
 class Question(models.Model):
     text = models.TextField()
-    category = models.CharField(max_length=255)
-    paragraph = models.TextField()
+    category = models.CharField(max_length=255, default="Без категории", blank=True)
+    paragraph = models.TextField(blank=True)
     multi_answer = models.BooleanField(default=False)
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
 

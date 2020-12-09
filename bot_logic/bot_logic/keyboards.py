@@ -45,8 +45,8 @@ class Keyboards:
 
     def get_class_menu(self,  page: int, class_name: str = "agent") -> types.InlineKeyboardMarkup:
         keyboard = types.InlineKeyboardMarkup(row_width=2)
-        keyboard.add(self.theory.to_telegram(data=[class_name, page]),
-                     self.agent_test.to_telegram())
+        test = self.agent_test.to_telegram() if class_name == 'agent' else self.broker_test.to_telegram()
+        keyboard.add(test)
         return keyboard
 
     def generate_keyboard_for_test(self, user: Student, question: Question, question_num: int, test_num: int) -> types.InlineKeyboardMarkup:

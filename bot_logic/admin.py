@@ -9,6 +9,9 @@ class QuestionAdmin(admin.ModelAdmin):
     list_display = ('pk', 'category', 'test', 'multi_answer')
     list_filter = ('test', 'category')
 
+    def get_ordering(self, request):
+        return ['-pk']
+
 
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
