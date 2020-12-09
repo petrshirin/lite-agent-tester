@@ -262,6 +262,8 @@ class UserLogic:
 
     def save_answer(self):
         user_selected_answers = self.user.studentcondition.current_selected_answers.all()
+        if not user_selected_answers:
+            return False
         question = user_selected_answers[0].question
         try:
             student_answer = StudentAnswer.objects.create(
