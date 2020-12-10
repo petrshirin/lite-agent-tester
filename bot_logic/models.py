@@ -55,6 +55,7 @@ class StudentCondition(models.Model):
         blank=True)
     student = models.OneToOneField(Student, on_delete=models.CASCADE, blank=True)
     current_selected_answers = models.ManyToManyField(Answer, blank=True)
+    done_tests = models.ManyToManyField(Test, related_name='done_tests', blank=True)
 
 
 class StudentTest(models.Model):

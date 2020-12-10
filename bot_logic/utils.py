@@ -1,5 +1,6 @@
 from bot_logic.models import StudentTest, StudentAnswer, Question, Test, Answer
 from typing import List, Dict
+from bot_logic.bot_logic.user_controllers import UserLogic
 
 
 def calculated_dict_to_array(data: dict) -> str:
@@ -44,6 +45,15 @@ def check_user_pay_status(self, test_num: int, func, page: int):
         return result
 
     return wrapper
+
+
+def check_done_test(tests, test_id: int = 1) -> bool:
+    if test_id == 0:
+        return True
+    for test in tests:
+        if test.pk == test_id:
+            return True
+    return False
 
 
 # register middleware

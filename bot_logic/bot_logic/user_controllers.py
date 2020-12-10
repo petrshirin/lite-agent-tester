@@ -1,12 +1,13 @@
 from telebot import types, TeleBot
-from bot_logic.models import Student, Test, Answer, StudentTest, StudentAnswer, Question
+from bot_logic.models import Student, Test, Answer, StudentTest, StudentAnswer
 from .lang import Lang
 from .keyboards import Keyboards
 from telebot.apihelper import ApiException
 from typing import Union
 from bot_logic.utils import \
     calculated_dict_to_array, calculate_question, \
-    check_user_pay_status, check_user_status, generate_answers_in_message
+    check_user_pay_status, check_user_status, \
+    generate_answers_in_message, check_done_test
 
 
 class UserLogic:
@@ -87,6 +88,12 @@ class UserLogic:
         return self.user.step
 
     def class_menu(self, class_name="agent"):
+        test_id = 0 if class_name == 'agent' else 1
+        if not check_done_test(self.user.studentcondition.done_tests.all(), test_id):
+            text = self.language.test_unavailable
+            self.send_common_message(f'{text}\n\n{self.language.main_menu}',
+                                     self.keyboards.get_main_menu())
+            return self.user.step
         text = self.language.class_menu
         markup = self.keyboards.get_class_menu(0, class_name)
         self.send_common_message(text, markup)
@@ -308,6 +315,14 @@ class UserLogic:
                         errors[error] = 1
 
         student_test.save()
-        text = self.language.test_info.format(true_point, all_points, "{}".format(calculated_dict_to_array(errors)))
+        percent = all_points / 100 * true_point
+        if percent > 70:
+            test_result = f"Тест сдан {round(percent)}%"
+            self.user.studentcondition.done_tests.add(student_test.test)
+            self.user.studentcondition.save()
+        else:
+            test_result = f"Тест не сдан {round(percent)}%"
+
+        text = self.language.test_info.format(true_point, all_points, test_result, "{}".format(calculated_dict_to_array(errors)))
         self.send_common_message(text, None)
         return self.user.step
